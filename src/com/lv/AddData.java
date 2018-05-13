@@ -56,7 +56,9 @@ public class AddData {
 
             //获取最后一行
             String end_line = null;
+            fileWriter.write(line + "\n");
             while ((line = bufferedReader.readLine()) != null) {
+                fileWriter.write(line + "\n");
                 end_line = line;
             }
 
@@ -66,12 +68,13 @@ public class AddData {
             data_date = simpleDateFormat.parse(data_string);
             calendar2.setTime(data_date);
             while (data_date.before(end)) {
+                calendar2.add(Calendar.SECOND,1);
+                data_date = calendar2.getTime();
                 String outDate = dateFormat.format(data_date);
                 String outTime = timeFormat.format(data_date);
                 String outString = data2[0] + "," +data2[1] + "," + outDate + "," + outTime + "," +data2[4] + "," +data2[5] + "\n";
                 fileWriter.write(outString);
-                calendar2.add(Calendar.SECOND,1);
-                data_date = calendar2.getTime();
+
             }
 
             fileWriter.close();
