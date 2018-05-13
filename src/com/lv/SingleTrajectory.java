@@ -77,20 +77,23 @@ public class SingleTrajectory {
             }
         }
         //两个Trajectory 之间
-        Trajectory first_trajectory = trajectories1.get(0);
-        Point pre_last_point = first_trajectory.getPoints().get(first_trajectory.getPoints().size() - 1);
-        for (Trajectory trajectory : trajectories1) {
-            Point last_point = trajectory.getPoints().get(trajectory.getPoints().size() - 1);
-            while (last_point.getDate().getTime() - pre_last_point.getDate().getTime() > 1000) {
-                Point newPoint = new Point(pre_last_point.getX(), pre_last_point.getY(), new Date(pre_last_point.getDate().getTime() + 1000));
-                trajectory.getPoints().add(newPoint);
-                pre_last_point = newPoint;
+
+        for (int i = 0; i < trajectories1.size() - 1; i++) {
+            Trajectory first_trajectory = trajectories1.get(i);
+            Trajectory second_trajectory = trajectories1.get(i + 1);
+            Point first_last_point = first_trajectory.getPoints().get(first_trajectory.getPoints().size() - 1);
+            Point second_first_point = second_trajectory.getPoints().get(0);
+
+            while (second_first_point.getDate().getTime() - first_last_point.getDate().getTime() > 1000) {
+                Point newPoint = new Point(first_last_point.getX(), first_last_point.getY(), new Date(first_last_point.getDate().getTime() + 1000));
+                first_trajectory.getPoints().add(newPoint);
+
+                first_last_point = newPoint;
             }
 
-            pre_last_point = last_point;
         }
 
-        File outFile = new File("C:\\E\\dataSet\\2018-05-13\\2009-03-09(最后数据)\\000.txt");
+        File outFile = new File("C:\\E\\dataSet\\2018-05-13\\2009-03-09(最后数据)\\179.txt");
 
         FileWriter fileWriter = new FileWriter(outFile,true);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -110,7 +113,7 @@ public class SingleTrajectory {
 
         int i = 1;
         for (Trajectory trajectory : trajectories1) {
-            File outFile = new File("C:\\E\\dataSet\\2018-05-13\\Trajectory\\179\\"+ i +".txt");
+            File outFile = new File("C:\\E\\dataSet\\2018-05-13\\最后的Trajectory\\179\\"+ i +".txt");
             i++;
             FileWriter fileWriter = new FileWriter(outFile,true);
 
