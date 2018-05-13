@@ -22,7 +22,7 @@ public class AddData {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
 
-            File outFile = new File("C:\\E\\dataSet\\2018-05-13\\2009-03-09(补充7点到出现第⼀个坐标点之间的数据)\\" + inFile.getName());
+            File outFile = new File("C:\\E\\dataSet\\2018-05-13\\2009-03-09(补充轨迹点)\\" + inFile.getName());
             FileWriter fileWriter = new FileWriter(outFile,true);
 
             line = bufferedReader.readLine();
@@ -48,7 +48,7 @@ public class AddData {
             while (start.before(data_date)) {
                 String outDate = dateFormat.format(start);
                 String outTime = timeFormat.format(start);
-                String outStirng = x + "," + y +outDate + "," + outTime + "," +data[4] + "," +data[5] + "\n";
+                String outStirng = x + "," + y + "," +outDate + "," + outTime + "," +data[4] + "," +data[5] + "\n";
                 fileWriter.write(outStirng);
                 calendar.add(Calendar.SECOND,1);
                 start = calendar.getTime();
