@@ -1,16 +1,21 @@
 package com.lv;
 
 
+import javafx.scene.input.DataFormat;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.zip.DataFormatException;
 
 //减去 source-data 文件中 找到 属于 2009-03-09 的数据，放在 2009-03-09 文件夹中
 public class FindData {
 
     public static void main(String[] args) throws Exception{
-        String inFileFolderPath = "C:\\E\\dataSet\\2018-05-13\\source-data";
+        String inFileFolderPath = "C:\\E\\dataSet\\2018-05-27\\2018-05-21平移轨迹\\2009-03-09补轨迹点";
         File inFileFolder = new File(inFileFolderPath);
         File[] inFiles = inFileFolder.listFiles();
 
@@ -20,17 +25,26 @@ public class FindData {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
 
-            File outFile = new File("C:\\E\\dataSet\\2018-05-13\\2009-03-09\\" + inFile.getName());
+            File outFile = new File("C:\\E\\dataSet\\2018-05-27\\2009-03-09(8点-22点)\\" + inFile.getName());
             FileWriter fileWriter = new FileWriter(outFile,true);
             while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(",");
-                String date_string = data[4];
-                if (date_string.equals("2009-03-09")) {
-                    fileWriter.write(data[0] + "," + data[1] + "," +data[4] + ","+ data[5] + "," + data[6] + "," + data[7] +"\n");
+                String now_string = data[5];
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+                Date now = simpleDateFormat.parse(now_string);
+
+                String start_string = "08:00:00";
+                String end_string = "22:00:00";
+                Date start = simpleDateFormat.parse(start_string);
+                Date end = simpleDateFormat.parse(end_string);
+
+                if (now.getTime() >= start.getTime() && now.getTime() <= end.getTime()) {
+                    fileWriter.write(data[6] + "," + data[7] + "," +data[4] + ","+ data[5] +"\n");
                 }
             }
 
             fileWriter.close();
+            System.out.println(".........");
         }
     }
 }
