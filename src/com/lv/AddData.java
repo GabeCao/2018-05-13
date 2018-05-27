@@ -12,7 +12,7 @@ import java.util.Date;
 public class AddData {
 
     public static void main(String[] args) throws Exception{
-        String inFileFolderPath = "C:\\E\\dataSet\\2018-05-27\\2009-03-09(8点-22点)";
+        String inFileFolderPath = "C:\\E\\dataSet\\2018-05-27\\2018-05-27(8点~22点)";
         File inFileFolder = new File(inFileFolderPath);
         File[] inFiles = inFileFolder.listFiles();
 
@@ -22,7 +22,7 @@ public class AddData {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
 
-            File outFile = new File("C:\\E\\dataSet\\2018-05-27\\2009-03-09(补充轨迹点)\\" + inFile.getName());
+            File outFile = new File("C:\\E\\dataSet\\2018-05-27\\2018-05-27(补轨迹点)\\" + inFile.getName());
             FileWriter fileWriter = new FileWriter(outFile,true);
 
             line = bufferedReader.readLine();
@@ -31,12 +31,10 @@ public class AddData {
             String x = data[0];
             String y = data[1];
 
-            String data_string = data[3];
+            String data_string = data[2];
             String start_string = "08:00:00";
             String end_string = "22:00:00";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-
-
 
             Date start = simpleDateFormat.parse(start_string);
             Date data_date = simpleDateFormat.parse(data_string);
@@ -48,7 +46,7 @@ public class AddData {
 //                String outDate = dateFormat.format(start);
 //                String outTime = timeFormat.format(start);
                 String outTime = simpleDateFormat.format(start);
-                String outStirng = x + "," + y + "," +data[2] + "," + outTime + "\n";
+                String outStirng = x + "," + y + "," + outTime + "\n";
                 fileWriter.write(outStirng);
                 calendar.add(Calendar.SECOND,1);
                 start = calendar.getTime();
@@ -67,7 +65,7 @@ public class AddData {
 
             Calendar calendar2 = Calendar.getInstance();
             String[] data2 = end_line.split(",");
-            data_string = data2[3];
+            data_string = data2[2];
             data_date = simpleDateFormat.parse(data_string);
             calendar2.setTime(data_date);
             while (data_date.before(end)) {
@@ -75,13 +73,13 @@ public class AddData {
                 data_date = calendar2.getTime();
 //                String outDate = dateFormat.format(data_date);
                 String outTime = simpleDateFormat.format(data_date);
-                String outString = data2[0] + "," +data2[1] + "," + data2[2] + "," + outTime + "\n";
+                String outString = data2[0] + "," +data2[1] + ","  + outTime + "\n";
                 fileWriter.write(outString);
 
             }
 
             fileWriter.close();
-            System.out.println("............");
+            System.out.println(inFile.getName());
         }
     }
 }

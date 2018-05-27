@@ -6,38 +6,43 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class SubstractSamePoint {
 
     public static void main(String[] args) throws Exception{
-        File fileFolder = new File("C:\\E\\dataSet\\2018-05-27\\2009-03-09(最后数据)");
+        File fileFolder = new File("C:\\E\\dataSet\\2018-05-27\\218-05-27(补充Trajectory 的轨迹点)");
         File[] files = fileFolder.listFiles();
         for (File file : files) {
-            String first_line;
-            String second_line;
+
+            String line;
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            second_line = bufferedReader.readLine();
-            first_line = second_line;
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-            String[] first_data = first_line.split(",");
-            Date first_date = simpleDateFormat.parse(first_data[2]);
-
-            File outFile = new File("C:\\E\\dataSet\\2018-05-27\\2009-03-09(最后数据去掉重复点)\\" + file.getName());
+            File outFile = new File("C:\\E\\dataSet\\2018-05-27\\2018-05-27(去掉相同的时间点)\\" + file.getName());
             FileWriter fileWriter = new FileWriter(outFile, true);
+            int count = 0;
 
-            while ((second_line = bufferedReader.readLine())!= null) {
-                String[] second_data = second_line.split(",");
+            String point_string = "08:00:00";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+            Date point = simpleDateFormat.parse(point_string);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(point);
+            while ((line = bufferedReader.readLine())!= null) {
+                Date point_ = calendar.getTime();
+
+                String[] second_data = line.split(",");
                 Date second_date = simpleDateFormat.parse(second_data[2]);
-                if (first_date.getTime() != second_date.getTime()) {
-                    fileWriter.write(first_line + "\n");
-                    first_line = second_line;
+                if (point_.getTime() == second_date.getTime()) {
+                    count++;
+                    calendar.add(Calendar.SECOND, 1);
+                    fileWriter.write(line + "\n");
                 }
+
+
             }
+            System.out.println(file.getName() + "         " +count + "           " );
             fileWriter.close();
-            System.out.println("..........");
         }
     }
 }

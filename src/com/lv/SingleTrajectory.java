@@ -11,7 +11,7 @@ import java.util.Date;
 public class SingleTrajectory {
 
     public static void main(String[] args) throws Exception{
-        File fileFolder = new File("C:\\E\\dataSet\\2018-05-27\\2009-03-09(补充轨迹点)");
+        File fileFolder = new File("C:\\E\\dataSet\\2018-05-27\\2018-05-27(补轨迹点)");
         File[] files = fileFolder.listFiles();
 
         for (File file : files) {
@@ -28,7 +28,7 @@ public class SingleTrajectory {
             double x_first = Double.parseDouble(data_first[0]);
             double y_first = Double.parseDouble(data_first[1]);
             SimpleDateFormat dateFormat_first = new SimpleDateFormat("HH:mm:ss");
-            Date date_first = dateFormat_first.parse(data_first[3]);
+            Date date_first = dateFormat_first.parse(data_first[2]);
             Point point_first = new Point(x_first, y_first, date_first);
             Trajectory trajectory_first = new Trajectory();
             trajectories.add(trajectory_first);
@@ -43,7 +43,7 @@ public class SingleTrajectory {
                 double x = Double.parseDouble(data[0]);
                 double y = Double.parseDouble(data[1]);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-                Date date = dateFormat.parse(data[3]);
+                Date date = dateFormat.parse(data[2]);
                 Point point = new Point(x, y, date);
 
                 long timeDiff = point.getDate().getTime() - prePoint.getDate().getTime();
@@ -97,7 +97,7 @@ public class SingleTrajectory {
 
             }
 
-            File outFile = new File("C:\\E\\dataSet\\2018-05-27\\2009-03-09(最后数据)\\" + file.getName());
+            File outFile = new File("C:\\E\\dataSet\\2018-05-27\\218-05-27(补充Trajectory 的轨迹点)\\" + file.getName());
 
             FileWriter fileWriter = new FileWriter(outFile, true);
 
@@ -110,7 +110,7 @@ public class SingleTrajectory {
                     fileWriter.write(outString);
                 }
             }
-            System.out.println("..............");
+            System.out.println(file.getName());
             fileWriter.close();
 
         }
