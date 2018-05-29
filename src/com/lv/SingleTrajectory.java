@@ -114,23 +114,5 @@ public class SingleTrajectory {
             fileWriter.close();
 
         }
-        /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
-        int i = 1;
-        for (Trajectory trajectory : trajectories1) {
-            File outFile = new File("C:\\E\\dataSet\\2018-05-13\\最后的Trajectory\\179\\"+ i +".txt");
-            i++;
-            FileWriter fileWriter = new FileWriter(outFile,true);
-
-            ArrayList<Point> points = trajectory.getPoints();
-            for (Point point : points) {
-                String outString = point.getX() + "," + point.getY() + ","
-                        + dateFormat.format(point.getDate()) + "," + timeFormat.format(point.getDate()) + "\n";
-                fileWriter.write(outString);
-            }
-            fileWriter.close();
-        }*/
-
     }
 }
