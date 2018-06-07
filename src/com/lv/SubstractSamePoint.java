@@ -1,6 +1,5 @@
 package com.lv;
 
-import java.awt.geom.Arc2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
